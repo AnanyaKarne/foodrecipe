@@ -1,7 +1,7 @@
-const searchBtn = document.getElementById('search-btn');
-const mealList = document.getElementById('meal');
-const mealDetailsContent = document.querySelector('.meal-details-content');
-const recipeCloseBtn = document.getElementById('recipe-close-btn');
+let searchBtn = document.getElementById('search-btn');
+let mealList = document.getElementById('meal');
+let mealDetailsContent = document.querySelector('.meal-details-content');
+let recipeCloseBtn = document.getElementById('recipe-close-btn');
 
 searchBtn.addEventListener('click', getMealList);
 mealList.addEventListener('click', getMealRecipe);
@@ -10,8 +10,10 @@ recipeCloseBtn.addEventListener('click', () => {
 });
 
 
+
 // get meal list that matches with the ingredients
 let searchInputTxt;
+let mealItem;
 function getMealList() {
     searchInputTxt = document.getElementById('search-input').value.trim();
 
@@ -48,8 +50,8 @@ fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputTxt}`)
  function getMealRecipe(e){
      e.preventDefault();
      if(e.target.classList.contains('recipe-btn')){
-         let mealItem = e.target.parentElement.parentElement;
-         console.log(mealItem);
+         mealItem = e.target.parentElement.parentElement;
+        //  console.log(mealItem);
          fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
          .then(response => response.json())
          .then(data => mealRecipeModal(data.meals));
@@ -74,6 +76,7 @@ fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputTxt}`)
              <a href = "${meal.strYoutube}" target = "_blank">Watch Video</a>
          </div>
      `;
+     console.log(html);
      mealDetailsContent.innerHTML = html;
      mealDetailsContent.parentElement.classList.add('showRecipe');
  } 
